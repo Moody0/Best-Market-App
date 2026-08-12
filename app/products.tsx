@@ -607,20 +607,16 @@ const ProductsList = React.memo(({ products, viewMode, handleLoadMore, loadingMo
     </View>
   ) : <View style={{ height: 20 }} />, [loadingMore, Colors]);
 
-  const getItemLayout = useCallback((data: any, index: number) => ({
-    length: 220,
-    offset: 220 * Math.floor(index / 2),
-    index,
-  }), []);
 
   return (
     <FlatList
+      key={viewMode}
       showsVerticalScrollIndicator={false}
       data={products}
       keyExtractor={keyExtractor}
-      numColumns={2}
+      numColumns={viewMode === 'grid' ? 2 : 1}
       contentContainerStyle={styles.list}
-      columnWrapperStyle={styles.row}
+      columnWrapperStyle={viewMode === 'grid' ? styles.row : undefined}
       renderItem={renderItem}
       onEndReached={handleLoadMore}
       onEndReachedThreshold={0.5}
@@ -629,7 +625,6 @@ const ProductsList = React.memo(({ products, viewMode, handleLoadMore, loadingMo
       windowSize={5}
       maxToRenderPerBatch={10}
       initialNumToRender={8}
-      getItemLayout={getItemLayout}
     />
   );
 });
