@@ -302,13 +302,24 @@ export default function HomeScreen() {
                 <ChevronLeft color={Colors.primary} size={16} />
               </TouchableOpacity>
             </View>
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 8 }}>
-              {dailyEssentials.map((item: any, index: number) => (
-                <Reanimated.View key={`daily-${item.id}-${index}`} entering={FadeInDown.delay(index * 100).springify()}>
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.productRow}
+              decelerationRate="fast"
+              snapToInterval={162}
+              data={dailyEssentials}
+              keyExtractor={(item, index) => `daily-${item.id}-${index}`}
+              initialNumToRender={3}
+              windowSize={3}
+              maxToRenderPerBatch={5}
+              removeClippedSubviews={true}
+              renderItem={({ item, index }: any) => (
+                <Reanimated.View entering={FadeInDown.delay(index * 100).springify()}>
                   <ProductCard product={item} numColumns={2} />
                 </Reanimated.View>
-              ))}
-            </View>
+              )}
+            />
           </View>
         )}
 
@@ -401,13 +412,24 @@ export default function HomeScreen() {
                 <ChevronLeft color={Colors.primary} size={16} />
               </TouchableOpacity>
             </View>
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 8 }}>
-              {data.best_sellers.map((item: any, index: number) => (
-                <Reanimated.View key={`best-${item.id}-${index}`} entering={FadeInDown.delay(index * 100).springify()}>
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.productRow}
+              decelerationRate="fast"
+              snapToInterval={162}
+              data={data.best_sellers}
+              keyExtractor={(item, index) => `best-${item.id}-${index}`}
+              initialNumToRender={3}
+              windowSize={3}
+              maxToRenderPerBatch={5}
+              removeClippedSubviews={true}
+              renderItem={({ item, index }: any) => (
+                <Reanimated.View entering={FadeInDown.delay(index * 100).springify()}>
                   <ProductCard product={item} numColumns={2} />
                 </Reanimated.View>
-              ))}
-            </View>
+              )}
+            />
           </View>
         )}
 
