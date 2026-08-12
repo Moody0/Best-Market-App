@@ -55,6 +55,7 @@
     "typescript": "~6.0.3"
   },
   "scripts": {
+    "eas-build-pre-install": "npm config set legacy-peer-deps true",
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
