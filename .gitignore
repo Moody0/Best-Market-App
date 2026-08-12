@@ -9,6 +9,11 @@ dist/
 web-build/
 expo-env.d.ts
 
+# AI Agent files
+.claude/
+AGENTS.md
+CLAUDE.md
+
 # Native
 .kotlin/
 *.orig.*
