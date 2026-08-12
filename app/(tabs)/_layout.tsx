@@ -11,7 +11,7 @@ import CartOverlay from '@/components/CartOverlay';
 function TabBarBackground({ bgColor, borderColor }: { bgColor: string, borderColor: string }) {
   const segments = useSegments();
   
-  const currentTab = segments[1] || 'index';
+  const currentTab = segments.length > 1 ? (segments as string[])[1] : 'index';
   
   const tabOrder = ['index', 'categories', 'cart', 'account'];
   let activeIndex = tabOrder.indexOf(currentTab as string);

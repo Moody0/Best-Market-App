@@ -204,7 +204,6 @@ export default function JoinDeliveryScreen() {
                   onChangeText={setPhone}
                   keyboardType="phone-pad"
                   textAlign="right"
-                  writingDirection="ltr"
                 />
               </View>
             </View>

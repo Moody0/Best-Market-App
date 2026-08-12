@@ -83,7 +83,7 @@ export default function ReceiptRedemptionScreen() {
 
       <ScrollView 
         style={styles.content} 
-        contentContainerStyle={[styles.scrollContent, { paddingBottom: 40 }]}
+        contentContainerStyle={[{ paddingBottom: 40 }]}
         showsVerticalScrollIndicator={false}
       >
         {/* Banner */}

@@ -13,7 +13,7 @@ import { ThemePalette } from '@/constants/Colors';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { useCustomAlert } from '@/contexts/CustomAlertContext';
 import * as Haptics from 'expo-haptics';
-import Reanimated, { FadeInDown, FadeOutLeft, LinearTransition, useSharedValue, useAnimatedStyle, withTiming, runOnJS } from 'react-native-reanimated';
+import Reanimated, { FadeInDown, FadeOutLeft, LinearTransition, useSharedValue, useAnimatedStyle, withTiming, withSpring, runOnJS } from 'react-native-reanimated';
 
 const CartItem = React.memo(({ item, Colors, styles, updateQuantity, onPromptDelete }: any) => {
   const plusScale = useSharedValue(1);

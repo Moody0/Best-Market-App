@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableOpacity, Text, ActivityIndicator } from 'rea
 import { Locate } from 'lucide-react-native';
 import { Colors } from '@/constants/Colors';
 import L from 'leaflet';
+// @ts-ignore
 import 'leaflet/dist/leaflet.css';
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;

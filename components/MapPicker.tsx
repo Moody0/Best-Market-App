@@ -4,6 +4,8 @@ import WebView from 'react-native-webview';
 import { Locate } from 'lucide-react-native';
 import { Colors } from '@/constants/Colors';
 
+const WebViewComponent = WebView as any;
+
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 interface MapPickerProps {
@@ -226,10 +228,9 @@ export default function MapPicker({
   if (fullScreen) {
     return (
       <View style={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}>
-        {/* @ts-ignore - react-native-webview type mismatch */}
-        <WebView
+        <WebViewComponent
           {...webViewProps}
-          style={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
+          style={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT } as any}
         />
       </View>
     );
@@ -245,10 +246,9 @@ export default function MapPicker({
         </TouchableOpacity>
       </View>
       <View style={styles.mapWrapper}>
-        {/* @ts-ignore - react-native-webview type mismatch */}
-        <WebView
+        <WebViewComponent
           {...webViewProps}
-          style={styles.map}
+          style={styles.map as any}
         />
       </View>
       <Text style={styles.mapHint}>حرّك الخريطة لتحديد موقعك بدقة</Text>

@@ -1,5 +1,5 @@
 import { initializeApp, getApps } from 'firebase/app';
-import { initializeAuth, getReactNativePersistence, RecaptchaVerifier, signInWithPhoneNumber, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { initializeAuth, RecaptchaVerifier, signInWithPhoneNumber, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import type { ConfirmationResult } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -18,6 +18,8 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0
 // Initialize Auth with AsyncStorage persistence to fix the warning
 let auth: ReturnType<typeof initializeAuth>;
 try {
+// @ts-ignore
+  const { getReactNativePersistence } = require('firebase/auth');
   auth = initializeAuth(app, {
     persistence: getReactNativePersistence(AsyncStorage)
   });
