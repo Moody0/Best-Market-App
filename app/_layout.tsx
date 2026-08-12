@@ -13,10 +13,7 @@ import { Blaka_400Regular } from '@expo-google-fonts/blaka';
 
 import { Platform } from 'react-native';
 
-// Apply global font
 if (Platform.OS === 'web') {
-  // On web, React Native Web's default system fonts often override defaultProps. 
-  // Injecting a global stylesheet guarantees Cairo is used everywhere.
   if (typeof document !== 'undefined') {
     document.documentElement.dir = 'rtl'; // Force Web DOM into RTL
     
@@ -30,8 +27,6 @@ if (Platform.OS === 'web') {
     document.head.appendChild(style);
   }
 } else {
-  // On native (iOS/Android)
-  // Safely apply default font using defaultProps instead of the unstable render monkey-patch
   interface TextWithDefaultProps { defaultProps?: { style?: any } }
   
   const TextComp = (Text as unknown) as TextWithDefaultProps;
@@ -52,7 +47,6 @@ import { CustomAlertProvider } from '@/contexts/CustomAlertContext';
 import CardLinkPrompt from '@/components/CardLinkPrompt';
 import { useLocationStore } from '@/store/location';
 
-// Force RTL for Arabic
 I18nManager.allowRTL(true);
 I18nManager.forceRTL(true);
 
@@ -89,7 +83,6 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (loaded) {
-      // Hide native splash screen quickly, because custom animated one is covering it
       SplashScreen.hideAsync();
     }
   }, [loaded]);
@@ -142,13 +135,11 @@ function RootLayoutNav() {
   const { colors, isDark } = useAppTheme();
   const router = useRouter();
 
-  // Silent startup routines (runs on every launch)
   useEffect(() => {
     const runStartupRoutines = async () => {
       try {
         if (Platform.OS === 'web') return;
         
-        // Always try to fetch location on startup if we already have permission
         const { status } = await Location.getForegroundPermissionsAsync();
         if (status === 'granted') {
           useLocationStore.getState().requestAndSetLocation(false);
@@ -160,7 +151,6 @@ function RootLayoutNav() {
     runStartupRoutines();
   }, []);
 
-  // Request permissions on very first app launch
   useEffect(() => {
     const requestInitialPermissions = async () => {
       try {
@@ -168,14 +158,11 @@ function RootLayoutNav() {
         const hasAsked = await AsyncStorage.getItem('has_asked_permissions_startup');
         if (hasAsked === 'true') return;
 
-        // Ask for Location
         const { status } = await Location.requestForegroundPermissionsAsync();
         if (status === 'granted') {
-          // Immediately fetch and save to the store so the Home page updates
           useLocationStore.getState().requestAndSetLocation(false);
         }
         
-        // Ask for Notifications (this will also fetch the token and sync if granted)
         await registerForPushNotificationsAsync();
 
         await AsyncStorage.setItem('has_asked_permissions_startup', 'true');

@@ -4,7 +4,6 @@ import { Platform } from 'react-native';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Custom throttled storage wrapper
 function createThrottledStorage(baseStorage: any, delay = 1000) {
   let timeout: ReturnType<typeof setTimeout> | null = null;
   const pendingWrites = new Map<string, string>();
@@ -116,12 +115,10 @@ export const useCartStore = create<CartState>()(
   },
 
   loadCart: async () => {
-    // Handled automatically by Zustand persist middleware
   },
 
   applyCoupon: async (code) => {
     try {
-      // Prevent applying coupon if user is not logged in (to avoid 401 Unauthenticated error)
       const { useAuthStore } = require('./auth');
       const token = useAuthStore.getState().token;
       
@@ -169,7 +166,6 @@ export const useCartStore = create<CartState>()(
     const { getSubtotal } = get();
     const subtotal = getSubtotal();
     if (subtotal === 0) return 0;
-    // Web app rule: Free delivery when threshold met (e.g., subtotal > 0 or >= 25,000 SYP). Free Delivery badge (0 SYP).
     return 0;
   },
 

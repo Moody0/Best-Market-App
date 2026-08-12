@@ -39,7 +39,6 @@ export default function SearchScreen() {
   const inputRef = useRef<TextInput>(null);
 
   useEffect(() => {
-    // Auto-focus search input when screen opens
     setTimeout(() => {
       inputRef.current?.focus();
     }, 100);
@@ -104,7 +103,6 @@ export default function SearchScreen() {
       {/* Content */}
       <View style={styles.content}>
         {query.length === 0 ? (
-          // Popular Searches
           <View style={styles.popularSection}>
             <View style={styles.popularHeader}>
               <Text style={[styles.popularTitle, { color: colors.primary }]}>الأكثر بحثا 🔥</Text>
@@ -128,7 +126,6 @@ export default function SearchScreen() {
             </View>
           </View>
         ) : (
-          // Search Suggestions (Mocked based on query)
           <FlatList
             data={searchSuggestions.length > 0 ? searchSuggestions : [`البحث عن "${query}"`]}
             keyExtractor={(item, index) => index.toString()}

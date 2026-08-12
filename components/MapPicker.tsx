@@ -28,7 +28,6 @@ export default function MapPicker({
   locateMeTrigger = 0,
 }: MapPickerProps) {
   const webViewRef = useRef<WebView>(null);
-  // Track whether coordinate update came from the map itself to avoid feedback loops
   const isMapDriven = useRef(false);
   const initialRegion = useRef({ latitude: region.latitude, longitude: region.longitude }).current;
 
@@ -127,18 +126,15 @@ export default function MapPicker({
           keepBuffer: 4
         }).addTo(map);
         
-        // Pin lifts up while dragging
         map.on('movestart', function() {
           pin.classList.add('dragging');
           shadow.classList.add('dragging');
         });
         
-        // Pin settles down when done
         map.on('moveend', function() {
           pin.classList.remove('dragging');
           shadow.classList.remove('dragging');
           
-          // Debounce coordinate updates to avoid spamming React
           clearTimeout(debounceTimer);
           debounceTimer = setTimeout(function() {
             var c = map.getCenter();
@@ -146,12 +142,10 @@ export default function MapPicker({
           }, 150);
         });
 
-        // Tap to set pin location
         map.on('click', function(e) {
           map.flyTo(e.latlng, map.getZoom(), { duration: 0.4, easeLinearity: 0.5 });
         });
 
-        // Handle external location updates (e.g. "Locate Me" button)
         window.flyTo = function(data) {
           map.stop(); // Stop any ongoing inertia
           map.setView([data.lat, data.lng], 17, { animate: true, duration: 0.5 });
@@ -175,7 +169,6 @@ export default function MapPicker({
     </html>
   `, []);
 
-  // Only send flyTo when triggered externally (locate me), not from map drag
   const sendFlyTo = useCallback((lat: number, lng: number) => {
     if (webViewRef.current) {
       webViewRef.current.injectJavaScript(`
@@ -187,12 +180,10 @@ export default function MapPicker({
     }
   }, []);
 
-  // Expose sendFlyTo for parent to call after locateMe updates coords
   const handleLocateMe = useCallback(() => {
     onLocateMe();
   }, [onLocateMe]);
 
-  // When markerCoord changes from locateMe (external), fly the map there
   const lastExternalCoord = useRef({ lat: region.latitude, lng: region.longitude });
   
   const handleMessage = useCallback((event: any) => {
@@ -201,13 +192,11 @@ export default function MapPicker({
       if (data.type === 'coord') {
         isMapDriven.current = true;
         setMarkerCoord({ latitude: data.lat, longitude: data.lng });
-        // Reset flag after a tick
         setTimeout(() => { isMapDriven.current = false; }, 100);
       }
     } catch (e) {}
   }, [setMarkerCoord]);
 
-  // Detect external coord changes (from locate me) and fly map there
   React.useEffect(() => {
     if (isMapDriven.current) return;
     const newLat = markerCoord.latitude;
@@ -230,7 +219,6 @@ export default function MapPicker({
     overScrollMode: 'never' as const,
     onMessage: handleMessage,
     onLoadEnd: () => {
-      // Ensure the map flies to the marker once HTML is fully loaded
       sendFlyTo(markerCoord.latitude, markerCoord.longitude);
     },
   };

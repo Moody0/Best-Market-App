@@ -29,13 +29,11 @@ const BannerCarousel = React.memo(function BannerCarousel({ banners, height = 38
   const lastInteraction = useRef(Date.now());
   const isReady = useRef(false);
 
-  // Filter only active banners if is_active is provided
   const activeBanners = React.useMemo(() => {
     if (!banners) return [];
     return banners.filter(b => b.is_active !== false);
   }, [banners]);
 
-  // Create an extended array for the infinite loop illusion: [last, ...all, first]
   const extendedBanners = React.useMemo(() => {
     if (activeBanners.length === 0) return [];
     if (activeBanners.length === 1) return activeBanners;
@@ -100,7 +98,6 @@ const BannerCarousel = React.memo(function BannerCarousel({ banners, height = 38
           lastInteraction.current = Date.now();
 
           if (index === 0) {
-            // Reached the prepended clone (swipe right past start), teleport to real last item
             const realLastIndex = extendedBanners.length - 2;
             const targetX = realLastIndex * width * (I18nManager.isRTL ? (Platform.OS === 'android' ? 1 : -1) : 1);
             runOnUI((ref: any, x: number) => {
@@ -109,7 +106,6 @@ const BannerCarousel = React.memo(function BannerCarousel({ banners, height = 38
             activeIndexRef.current = realLastIndex;
             progressValue.value = realLastIndex;
           } else if (index === extendedBanners.length - 1) {
-            // Reached the appended clone (swipe left past end), teleport to real first item
             const realFirstIndex = 1;
             const targetX = realFirstIndex * width * (I18nManager.isRTL ? (Platform.OS === 'android' ? 1 : -1) : 1);
             runOnUI((ref: any, x: number) => {
@@ -172,7 +168,6 @@ function AnimatedDot({ index, progressValue, length, dotColor, inactiveColor }: 
       progress = 1;
     }
 
-    // Offset progress by -1 because the first visible item is actually index 1 in extendedBanners
     let val = (progress - 1) % length;
     if (val < 0) val += length;
     

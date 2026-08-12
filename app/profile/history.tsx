@@ -45,7 +45,6 @@ export default function PointsHistoryScreen() {
   }
 
   const renderItem = ({ item }: { item: any }) => {
-    // If using real API, adapt fields. Here we gracefully handle both mock and real.
     const isEarn = item.type === 'earn' || item.points > 0 || !item.type;
     const pointsAmount = Math.abs(item.points || 0);
     const title = item.title || item.description || 'عملية نقاط';

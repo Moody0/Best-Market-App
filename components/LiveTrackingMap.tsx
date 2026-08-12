@@ -87,7 +87,6 @@ export default function LiveTrackingMap({ customerLat, customerLng, driverLat, d
             .catch(err => console.error(err));
         };
 
-        // Initial route fetch
         window.updateMap(window.customerLat, window.customerLng, window.driverLat, window.driverLng);
       </script>
     </body>

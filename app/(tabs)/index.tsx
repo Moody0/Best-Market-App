@@ -39,7 +39,6 @@ export default function HomeScreen() {
   const [selectedCatId, setSelectedCatId] = useState<number | null>(null);
   const { displayAddress, setLocationModalVisible } = useLocationStore();
 
-  // Animation values
   const scrollY = React.useRef(new Animated.Value(0)).current;
 
   const stickyHeaderOpacity = scrollY.interpolate({
@@ -96,7 +95,6 @@ export default function HomeScreen() {
   };
 
 
-  // Derive data fallbacks
   const weeklyOffers = useMemo(() => data?.weekly_offers || data?.best_sellers?.slice(0, 6) || [], [data]);
   const dailyEssentials = useMemo(() => data?.daily_essentials || data?.categories?.[0]?.products || [], [data]);
   const categoryNames = useMemo(() => data?.categories?.map((c: any) => c.name) || ['منتج', 'لحوم', 'منظفات'], [data]);
@@ -460,7 +458,6 @@ function AnimatedMapPin({ color, size }: { color: string; size: number }) {
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
     const timeout = setTimeout(() => {
-      // Double bounce animation
       interval = setInterval(() => {
         jump.value = withSequence(
           withTiming(-4, { duration: 250, easing: Easing.out(Easing.quad) }),
@@ -519,11 +516,7 @@ const AnimatedSearchIcon = React.forwardRef(({ color, size, autoSpin }: { color:
   }, [autoSpin]);
 
   const animatedProps = useAnimatedProps(() => {
-    // Convert rotation degrees to radians
     const rad = (rotation.value * Math.PI) / 180;
-    // Animate ry from 8 to 0 to 8 to simulate 3D flip orthographically.
-    // We use Math.abs because ry cannot be negative in SVG.
-    // This perfectly preserves stroke width, giving a true 3D wireframe look!
     return {
       ry: Math.max(0.01, 8 * Math.abs(Math.cos(rad))), // Use 0.01 to prevent rendering glitches at 0
     };
@@ -778,7 +771,6 @@ const getStyles = (Colors: ThemePalette) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    // Removed paddingTop to allow full bleed to top
   },
   center: {
     flex: 1,

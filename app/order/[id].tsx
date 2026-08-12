@@ -32,7 +32,6 @@ export default function OrderDetailScreen() {
   useEffect(() => {
     fetchOrder();
     
-    // Poll for status updates every 10 seconds
     const interval = setInterval(() => {
       fetchOrder();
     }, 10000);
@@ -91,7 +90,6 @@ export default function OrderDetailScreen() {
     ];
     
     let normalizedStatus = currentStatus?.trim()?.toLowerCase() || 'pending';
-    // If the status is 'ready' on the backend, map it to 'processing' visually since we removed the 'ready' step
     if (normalizedStatus === 'ready') normalizedStatus = 'processing';
 
     const currentIndex = steps.findIndex(s => s.key === normalizedStatus) === -1 ? 0 : steps.findIndex(s => s.key === normalizedStatus);

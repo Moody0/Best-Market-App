@@ -29,14 +29,12 @@ export default function LoginScreen() {
   const router = useRouter();
   const setAuth = useAuthStore(state => state.setAuth);
 
-  // Countdown timer
   React.useEffect(() => {
     if (countdown <= 0) return;
     const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
     return () => clearTimeout(timer);
   }, [countdown]);
 
-  // Google OAuth logic
   React.useEffect(() => {
     GoogleSignin.configure({
       webClientId: '267021137621-cbt7fa5e7h3fatfuot3brvekih07n0ue.apps.googleusercontent.com',
@@ -56,13 +54,10 @@ export default function LoginScreen() {
         throw new Error('No ID token found');
       }
 
-      // Create Firebase credential
       const googleCredential = GoogleAuthProvider.credential(idToken);
       
-      // Sign-in the user with the credential
       const userCredential = await signInWithCredential(firebaseAuth, googleCredential);
       
-      // Send token to backend exactly like web
       const res = await api.post('/auth/google', {
         firebase_token: idToken,
         email: userCredential.user.email,

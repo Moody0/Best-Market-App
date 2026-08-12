@@ -165,7 +165,6 @@ export default function CheckoutScreen() {
   const [loadingAddresses, setLoadingAddresses] = useState(true);
   const [earnedPoints, setEarnedPoints] = useState(0);
 
-  // Map Picker Modal State
   const [showModal, setShowModal] = useState(false);
   const [step, setStep] = useState<'map' | 'form'>('map');
   const [mapRegion, setMapRegion] = useState({

@@ -55,7 +55,6 @@ export default function ProductsScreen() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState(false);
 
-  // States
   const [searchQuery, setSearchQuery] = useState(search as string || '');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(category as string || null);
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
@@ -64,20 +63,16 @@ export default function ProductsScreen() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
-  // Search History & Suggestions
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
   const [suggestions, setSuggestions] = useState<any[]>([]);
 
-  // Pagination
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  // Search Categories extraction
   const searchCategories = useMemo(() => {
     if (!searchQuery) return [];
     
-    // Flatten all categories to find the ones we need
     const flatCategories: any[] = [];
     categories.forEach(c => {
       flatCategories.push(c);
@@ -87,7 +82,6 @@ export default function ProductsScreen() {
     return flatCategories;
   }, [categories, searchQuery]);
 
-  // Fetch Categories
   useEffect(() => {
     api.get('/categories').then(res => {
       const cats = res.data.data || res.data || [];
@@ -99,7 +93,6 @@ export default function ProductsScreen() {
     });
   }, []);
 
-  // Reset pagination when filters or search change, with debounce for live search
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (isSearchFocused) {

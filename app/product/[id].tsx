@@ -121,7 +121,6 @@ export default function ProductDetailScreen() {
   useEffect(() => {
     isMounted.current = true;
     
-    // Slide the product sheet up when the screen mounts
     Animated.spring(panY, {
       toValue: 0,
       useNativeDriver: true,
@@ -164,7 +163,6 @@ export default function ProductDetailScreen() {
         setLoading(false);
       }
 
-      // Fallback: If we didn't have the category_id upfront, fetch it sequentially now
       if (!category_id && productData.category_id) {
         setRelatedLoading(true);
         api.get(`/products?category_id=${productData.category_id}`)
@@ -313,14 +311,12 @@ export default function ProductDetailScreen() {
 
 
 
-  // Header opacity animation based on scroll
   const headerOpacity = scrollY.interpolate({
     inputRange: [0, height * 0.25],
     outputRange: [0, 1],
     extrapolate: 'clamp',
   });
 
-  // Background opacity animation based on drag (panY)
   const bgOpacity = panY.interpolate({
     inputRange: [0, height * 0.8],
     outputRange: [0.5, 0],

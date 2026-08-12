@@ -73,7 +73,6 @@ export default function LoyaltyScreen() {
     );
   }
 
-  // Loyalty calculations
   const points = loyaltyData?.points ?? 0;
   const lifetimePoints = loyaltyData?.lifetime_points ?? 0;
   const tier = loyaltyData?.loyalty_tier || 'bronze'; // 'bronze', 'silver', 'gold'

@@ -3,7 +3,6 @@ import { Platform } from 'react-native';
 
 let SecureStore: any = null;
 
-// Web-safe storage wrapper — SecureStore doesn't work on web
 const storage = {
   getItem: async (key: string): Promise<string | null> => {
     if (Platform.OS === 'web') {

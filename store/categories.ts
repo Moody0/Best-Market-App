@@ -40,12 +40,10 @@ export const useCategoriesStore = create<CategoriesStore>()(
 
       fetchCategories: async (force = false) => {
         const state = get();
-        // Skip fetch if data was fetched less than 5 minutes ago (unless forced)
         if (!force && state.lastFetched && Date.now() - state.lastFetched < 5 * 60 * 1000 && state.categories.length > 0) {
           return;
         }
 
-        // Only show loading if we don't have cached categories
         if (state.categories.length === 0) {
           set({ loading: true, error: false });
         }
@@ -67,7 +65,6 @@ export const useCategoriesStore = create<CategoriesStore>()(
           set({ categories: parsedData, loading: false, lastFetched: Date.now(), error: false });
         } catch (error) {
           console.error('Error fetching categories:', error);
-          // If we already have cached data, don't show an error state that breaks the UI
           if (state.categories.length === 0) {
             set({ error: true, loading: false });
           }

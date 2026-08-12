@@ -23,7 +23,6 @@ export const useHomeStore = create<HomeStore>()(
 
       fetchHomeData: async (force = false) => {
         const state = get();
-        // Skip fetch if data was fetched less than 5 minutes ago and we have data
         if (!force && state.lastFetched && Date.now() - state.lastFetched < 5 * 60 * 1000 && state.data) {
           return;
         }
@@ -36,7 +35,6 @@ export const useHomeStore = create<HomeStore>()(
           const res = await api.get('/home');
           const homeData = res.data;
           
-          // Prefetch banner images
           if (homeData.banners && Array.isArray(homeData.banners)) {
             homeData.banners.forEach((b: any) => {
               if (b.image_url) {

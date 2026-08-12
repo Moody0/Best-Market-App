@@ -5,7 +5,6 @@ import { Colors } from '@/constants/Colors';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// Fix Leaflet's default icon path broken by webpack
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
@@ -52,7 +51,6 @@ export default function MapPicker({
 
     mapRef.current = map;
 
-    // Custom Icon
     const icon = L.divIcon({
       html: `<div style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;">
         <svg width="32" height="40" viewBox="0 0 32 40" fill="none">
@@ -86,7 +84,6 @@ export default function MapPicker({
     };
   }, []);
 
-  // Update map and marker if props change externally (like via "Locate me")
   useEffect(() => {
     if (mapRef.current && markerRef.current) {
       const currentMapCenter = mapRef.current.getCenter();

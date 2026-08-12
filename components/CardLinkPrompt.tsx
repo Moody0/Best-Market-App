@@ -49,14 +49,12 @@ export default function CardLinkPrompt() {
         const res = await api.get('/user/card');
         const data: CardStatus = res.data;
 
-        // If they have a card or a pending request, don't show prompt
         if (data.has_card || data.pending_request) return;
 
         setTimeout(() => {
           setIsVisible(true);
         }, 1500);
       } catch {
-        // Ignored. Probably not logged in.
       }
     };
 

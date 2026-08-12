@@ -22,7 +22,6 @@ const CartItem = React.memo(({ item, Colors, styles, updateQuantity, onPromptDel
   const plusStyle = useAnimatedStyle(() => ({ transform: [{ scale: plusScale.value }] }));
   const minusStyle = useAnimatedStyle(() => ({ transform: [{ scale: minusScale.value }] }));
 
-  // Fix Image URL
   const imageString = item.image_url || item.image;
   const imageUrl = imageString && imageString !== 'undefined' && imageString !== 'null'
     ? (imageString.startsWith('http') || imageString.startsWith('/')
@@ -253,7 +252,6 @@ const CartFooter = React.memo(({ onProceedToCheckout }: { onProceedToCheckout: (
   );
 });
 
-// Design Tokens for Cart
 
 export default function CartOverlay() {
   const insets = useSafeAreaInsets();
@@ -292,7 +290,6 @@ export default function CartOverlay() {
     toggleCart(false);
   }, [toggleCart]);
 
-  // Intercept hardware back button for fade out
   useEffect(() => {
     const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
       if (isCartOpen) {
@@ -310,7 +307,6 @@ export default function CartOverlay() {
     backgroundColor: Colors.background,
   }));
 
-  // Phone Verification State
   const { user, setAuth } = useAuthStore(useShallow(state => ({ user: state.user, setAuth: state.setAuth })));
   const [showPhoneModal, setShowPhoneModal] = useState(false);
   const [phoneStep, setPhoneStep] = useState<'phone' | 'otp'>('phone');
@@ -356,7 +352,6 @@ export default function CartOverlay() {
     try {
       const fullPhone = '+963' + phoneInput;
       
-      // Check if phone is already registered first
       const checkRes = await api.post('/auth/check-phone', { phone: fullPhone });
       if (checkRes.data.exists) {
         setPhoneError('رقم الهاتف هذا مسجل مسبقاً بحساب آخر.');
@@ -377,7 +372,6 @@ export default function CartOverlay() {
     const cleanValue = value.replace(/\D/g, '');
     setOtpInput(cleanValue);
     if (cleanValue.length === 6) {
-      // Auto submit when 6 digits are entered
       handleVerifyPhoneOTP(cleanValue);
     }
   };
@@ -394,7 +388,6 @@ export default function CartOverlay() {
       const fullPhone = '+963' + phoneInput;
       const res = await api.post('/user/link-phone', { phone: fullPhone, otp: finalOtp });
       
-      // Update local user state
       if (res.data.user) {
         const currentToken = useAuthStore.getState().token;
         if (currentToken) {
@@ -405,7 +398,6 @@ export default function CartOverlay() {
       setShowPhoneModal(false);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       
-      // Automatically proceed to checkout
       setTimeout(() => {
         router.push('/checkout');
       }, 500);

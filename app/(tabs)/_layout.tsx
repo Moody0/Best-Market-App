@@ -11,25 +11,18 @@ import CartOverlay from '@/components/CartOverlay';
 function TabBarBackground({ bgColor, borderColor }: { bgColor: string, borderColor: string }) {
   const segments = useSegments();
   
-  // Extract the current tab name from segments
   const currentTab = segments[1] || 'index';
   
-  // We have 4 visible tabs in the bottom bar
   const tabOrder = ['index', 'categories', 'cart', 'account'];
   let activeIndex = tabOrder.indexOf(currentTab as string);
   if (activeIndex === -1) activeIndex = 0;
 
   const { width } = Dimensions.get('window');
-  // The floating tab bar has left: 20, right: 20, so its total width is width - 40
   const tabWidth = (width - 40) / 4;
 
   const translateX = useSharedValue(0);
 
   useEffect(() => {
-    // In RTL, RN auto-flips `left`/`right` in styles, so `left: 0` = physical RIGHT (Home).
-    // But `translateX` is NEVER flipped: positive = physical right, negative = physical left.
-    // To move from Home (right) toward Account (left), we need negative translateX → direction = -1.
-    // In LTR, `left: 0` = physical left (Home). To move right → direction = +1.
     const direction = I18nManager.isRTL ? -1 : 1;
     translateX.value = withSpring(activeIndex * tabWidth * direction, { 
       damping: 26, 
@@ -162,9 +155,7 @@ export default function TabLayout() {
         name="cart-tab"
         listeners={({ navigation }) => ({
           tabPress: (e) => {
-            // Prevent default tab switch
             e.preventDefault();
-            // Toggle global cart modal
             toggleCart(true);
           },
         })}

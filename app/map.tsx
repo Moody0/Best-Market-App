@@ -48,7 +48,6 @@ export default function MapPickerScreen() {
           return;
         }
 
-        // Try last known position first for instant snap
         let location = await Location.getLastKnownPositionAsync({});
         
         if (!location) {
@@ -80,7 +79,6 @@ export default function MapPickerScreen() {
     })();
   }, []);
 
-  // Update address when marker changes from MapPicker (e.g. user drags map)
   useEffect(() => {
     if (loading) return;
     const timeout = setTimeout(() => {
