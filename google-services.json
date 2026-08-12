@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "267021137621",
+    "project_id": "best-market-sy",
+    "storage_bucket": "best-market-sy.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:267021137621:android:b49903c773196b595b145c",
+        "android_client_info": {
+          "package_name": "com.mody10.appcustomer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "267021137621-841t10vnvusri22jikqb2kvppfmts77p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mody10.appcustomer",
+            "certificate_hash": "f3329099f95e6a566d05eb7ccfb8e848b0f6cc7d"
+          }
+        },
+        {
+          "client_id": "267021137621-cbt7fa5e7h3fatfuot3brvekih07n0ue.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdnlNUhk6w8HqvAk_WyzevDf1ALZvnrhk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "267021137621-cbt7fa5e7h3fatfuot3brvekih07n0ue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
